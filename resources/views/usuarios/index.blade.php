@@ -4,47 +4,55 @@
 	<div class="row justify-content-center">
 		<div class="col-md-12">
 			<div class="card">
-				<div class="card-header">Usuarios
-					<button class="btn btn-primary" data-toggle="modal" data-target="#modalUsuario" onclick="addupd()">
-						Agregar usuarios
-					</button>
+				<div>
+					<div class="card-header">
+						<div class="col-md-12">
+							
+							Usuarios
+							<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modalUsuario" onclick="addupd()">
+								Agregar usuarios
+							</button>
+							
+						</div>
+					</div>
 				</div>
+			</div>
 
-				<div class="card-body">
-					<table class="table">
-						<thead class="thead-dark">
-							<tr>
-								<th scope="col">Nombre</th>
-								<th scope="col">Email</th>
-								<th scope="col">Perfil</th>
-								<th scope="col">Area</th>
-								<th scope="col"></th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach($usuarios as $usuario)
-							<tr>
-								<td>{{$usuario->name}}</td>
-								<td>{{$usuario->email}}</td>
-								<td>{{$usuario->perfil->nombre}}</td>
-								<td>{{$usuario->area->nombre}}</td>
-								<td>
-									<button class="btn btn-primary">
-										Editar
-									</button>
-									<button class="btn btn-danger">
-										Eliminar
-									</button>
-								</td>
-							</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
+			<div class="card-body">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Nombre</th>
+							<th scope="col">Email</th>
+							<th scope="col">Perfil</th>
+							<th scope="col">Area</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($usuarios as $usuario)
+						<tr>
+							<td>{{$usuario->name}}</td>
+							<td>{{$usuario->email}}</td>
+							<td>{{$usuario->perfil->nombre}}</td>
+							<td>{{$usuario->area->nombre}}</td>
+							<td>
+								<button class="btn btn-primary">
+									Editar
+								</button>
+								<button class="btn btn-danger">
+									Eliminar
+								</button>
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 </div>
+
 @endsection
 @section('modals')
 <div class="modal fade" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -57,9 +65,8 @@
 				</button>
 			</div>
 			{!! Form::open(array('url'=>'usuarios/store','method'=>'POST')) !!}
-				{!! csrf_field() !!}
+			{!! csrf_field() !!}
 			<div class="modal-body">
-				
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-6">
@@ -78,10 +85,8 @@
 							{{Form::label('area_id', 'Area')}}
 							{!!Form::select('area_id', $areas, null,['class'=>'form-control','placeholder'=>'Areas', 'required', 'id' => 'area_id'])!!}
 						</div>
-
 					</div>
 				</div>
-				{
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
