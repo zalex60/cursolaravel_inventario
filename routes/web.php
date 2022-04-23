@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('verify/{token}', 'UserController@verify'); 
+Route::post('verificar', 'UserController@verificar')->name('verificar.email');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
