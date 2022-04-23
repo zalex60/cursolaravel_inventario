@@ -5,49 +5,60 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div>
+					@if($errors->any())
+					<div class="alert alert-danger alert-dismissible">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<ul>
+							@foreach ($errors->all() as $error)
+							<li><p>{!! $error !!}</p></li>
+							@endforeach
+						</ul>
+					</div>
+					@endif
 					<div class="card-header">
-						<div class="col-md-12">
-							
-							Usuarios
-							<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modalUsuario" onclick="addupd()">
-								Agregar usuarios
-							</button>
-							
+						<div class="col-md-12" align="center">
+							<h3>Usuarios</h3>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="card-body">
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Nombre</th>
-							<th scope="col">Email</th>
-							<th scope="col">Perfil</th>
-							<th scope="col">Area</th>
-							<th scope="col"></th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach($usuarios as $usuario)
-						<tr>
-							<td>{{$usuario->name}}</td>
-							<td>{{$usuario->email}}</td>
-							<td>{{$usuario->perfil->nombre}}</td>
-							<td>{{$usuario->area->nombre}}</td>
-							<td>
-								<button class="btn btn-primary">
-									Editar
-								</button>
-								<button class="btn btn-danger">
-									Eliminar
-								</button>
-							</td>
-						</tr>
-						@endforeach
-					</tbody>
-				</table>
+				<div class="table-responsive">
+					<table class="table" >
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col" width="25%">Nombre</th>
+								<th scope="col"  width="20%">Email</th>
+								<th scope="col"  width="15%">Perfil</th>
+								<th scope="col"  width="15%">Area</th>
+								<th scope="col"  width="15%">
+									<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modalUsuario" onclick="addupd()">
+										Agregar usuarios
+									</button>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($usuarios as $usuario)
+							<tr>
+								<td>{{$usuario->name}}</td>
+								<td>{{$usuario->email}}</td>
+								<td>{{$usuario->perfil->nombre}}</td>
+								<td>{{$usuario->area->nombre}}</td>
+								<td>
+									<button class="btn btn-primary">
+										Editar
+									</button>
+									<button class="btn btn-danger">
+										Eliminar
+									</button>
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -72,18 +83,38 @@
 						<div class="col-md-6">
 							{{Form::label('nombre', 'Nombre')}}
 							{!! Form::text('nombre', null, ['class'=>'form-control', 'id' => 'nombre'])!!}
+							@if ($errors->has('nombre'))
+							<small class="text-danger">
+								<strong>{{ $errors->first('nombre') }}</strong>
+							</small>
+							@endif
 						</div>
 						<div class="col-md-6">
 							{{Form::label('email', 'E-Mail Address')}}
-							{!! Form::text('email', null, ['class'=>'form-control', 'id' => 'email'])!!}
+							{!! Form::email('email', null, ['class'=>'form-control', 'id' => 'email'])!!}
+							@if ($errors->has('email'))
+							<small class="text-danger">
+								<strong>{{ $errors->first('email') }}</strong>
+							</small>
+							@endif
 						</div>
 						<div class="col-md-6">
 							{{Form::label('perfil_id', 'Perfil')}}
 							{!!Form::select('perfil_id', $perfiles, null,['class'=>'form-control','placeholder'=>'Perfiles', 'required', 'id' => 'perfil_id'])!!}
+							@if ($errors->has('perfil_id'))
+							<small class="text-danger">
+								<strong>{{ $errors->first('perfil_id') }}</strong>
+							</small>
+							@endif
 						</div>
 						<div class="col-md-6">
 							{{Form::label('area_id', 'Area')}}
 							{!!Form::select('area_id', $areas, null,['class'=>'form-control','placeholder'=>'Areas', 'required', 'id' => 'area_id'])!!}
+							@if ($errors->has('area_id'))
+							<small class="text-danger">
+								<strong>{{ $errors->first('area_id') }}</strong>
+							</small>
+							@endif
 						</div>
 					</div>
 				</div>
