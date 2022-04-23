@@ -21,12 +21,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+ //Clase 3
     public function perfil(){
-        $this->belongsTo('App\Models\Perfil','perfil_id');
+        return  $this->belongsTo('App\Models\Perfil','perfil_id');
     }
 
     public function area(){
-        $this->belongsTo('App\Models\Area','area_id');
+        return $this->belongsTo('App\Models\Area','area_id');
     }
 }
