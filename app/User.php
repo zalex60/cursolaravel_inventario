@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'perfil_id','area_id', 'password',
     ];
 
     /**
@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function perfil(){
+        return $this->belongsTo('App\Models\Perfil','perfil_id');
+    }
+
+    public function area(){
+        return $this->belongsTo('App\Models\Area','area_id');
+    }
+
 }

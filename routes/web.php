@@ -16,3 +16,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+/*
+ * Proveedors Routes
+ */
+Route::resource('proveedors', 'ProveedorController');
+
+Route::group(['prefix' => 'usuarios'], function () {
+    Route::get('/', 'UserController@index');
+    Route::post('store', 'UserController@store')->name('user.store');
+
+});
+
+
+
+
+Route::get('verify/{token}', 'UserController@verify'); 
+Route::post('verificar', 'UserController@verificar')->name('verificar.email');
