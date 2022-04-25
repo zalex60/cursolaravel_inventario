@@ -27,7 +27,7 @@
             <td>{{$usuario->perfil->nombre}}</td>
             <td>{{$usuario->area->nombre}}</td>
             <td>
-                <button class="btn btn-primary" onclick="addupd();">Editar</button>
+                <button class="btn btn-primary" onclick="addupd( {{ $usuario->id }} );">Editar</button>
                 <button class="btn btn-danger">Eliminar</button>
             </td>
         </tr>
@@ -44,7 +44,7 @@
 @endsection
 
 @section('modals')
-<!-- Modal -->
+<!-- Modal Usuario Nuevo-->
 <div class="modal fade" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -83,21 +83,87 @@
     </div>
   </div>
 </div>
+<!-- Cierre Modal Usario Nuevo-->
+
+
+<!-- Modal Editar Usario-->
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="EditUserLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {!! Form::open(array('url'=>'usuarios/update','method'=>'POST','id'=>'editUser')) !!} {!! csrf_field() !!} 
+      <div class="modal-body">
+
+<div class="form-group"> 
+    <div class="row"> 
+        <div class="col-md-6"> 
+            {{Form::label('nombre', 'Nombre')}} {!! Form::text('nombre', null, ['class'=>'form-control', 'id' => 'editNombre'])!!} 
+        </div> 
+        <div class="col-md-6"> 
+            {{Form::label('email', 'E-Mail Address')}} {!! Form::text('email', null, ['class'=>'form-control', 'id' => 'editEmail'])!!} 
+        </div> 
+        <div class="col-md-6">
+            {{Form::label('perfil_id', 'Perfil')}}
+            {!!Form::select('perfil_id', $perfiles, null,['class'=>'form-control','placeholder'=>'Perfiles', 'required', 'id' => 'editPerfil_id'])!!} 
+        </div> 
+        <div class="col-md-6">
+            {{Form::label('area_id', 'area')}}
+            {!!Form::select('area_id', $areas, null,['class'=>'form-control','placeholder'=>'areas', 'required', 'id' => 'editArea_id'])!!} 
+        </div>     </div> 
+</div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+
+      {!! Form::hidden('usuario_id', null, ['id' => 'editUsuario_id'])!!}
+
+      {!! Form::close() !!}
+    </div>
+  </div>
+</div>
+<!-- Cierre Modal Editar Usario-->
+
 @endsection
 
 @section('script')
     <script type="text/javascript">
-        function addupd(){
-            // console.log('ahi esta');
-            if(user){                
-                // document.getElementById('nombre');
-                // $('#nombre').val()
-            }
+        function addupd(user_id){
+            // // console.log('ahi esta');
+            // if(user_id){                
+            //     // document.getElementById('nombre');
+            //     // $('#nombre').val()
+                
+            // }
 
 
-            document.getElementById('email');
-            document.getElementById('perfil_id');
-            document.getElementById('area_id');
+            // document.getElementById('email');
+            // document.getElementById('perfil_id');
+            // document.getElementById('area_id');
+            console.log('ahi esta');
+            $.ajax({
+                type: "GET",
+                url: "/usuarios/"+user_id,
+                success: function(data)
+                {
+                    // alert(data.perfil_id);
+                    document.getElementById('editNombre').value = data.name;
+                    document.getElementById('editEmail').value = data.email;
+                    document.getElementById('editPerfil_id').value = data.perfil_id;
+                    document.getElementById('editArea_id').value = data.area_id;
+                    document.getElementById('editUsuario_id').value = data.id;
+
+                }
+            });
+
+
+            $('#editUser').modal('show');
         }
     </script>
 @endsection

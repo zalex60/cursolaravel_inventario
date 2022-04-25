@@ -59,6 +59,34 @@ class UserController extends Controller
         }
     }
 
+    public function update(Request $request)
+    {
+        // print_r($request->all());
+
+        $update_data['name']=$request->input('nombre');
+        $update_data['email']=$request->input('email');
+        $update_data['perfil_id']=$request->input('perfil_id');
+        $update_data['area_id']=$request->input('area_id');
+        $update_data['updated_at']=date('Y-m-d H:i:s');
+        // $user->id= $request->usuario_id;
+        // $user->name= $request->nombre;
+        // $user->email= $request->email;
+        // $user->perfil_id= $request->perfil_id;
+        // $user->area_id= $request->area_id;
+        // $user->updated_at=date('Y-m-d H:i:s');
+
+        // if ($user->save()){
+        //     return redirect()->back();
+        // }else{
+        //     return 'No se guardo';
+        // }    
+        DB::table('users')->where('id',$request->input('usuario_id'))->update($update_data);
+
+        return redirect()->back();
+       
+
+    }
+
 
     public function verify($token){
         if (User::where('password', $token)->exists()) {
@@ -100,5 +128,15 @@ class UserController extends Controller
             ->with('message_danger', 'La contraseña de verificación no coincide.');
         }
     }
+
+
+
+    public function info($UserID)
+    {
+        $user = DB::table('users')->where('ID', $UserID)->first();
+        return get_object_vars($user);
+    }
+
+
 
 }

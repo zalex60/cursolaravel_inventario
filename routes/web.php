@@ -29,6 +29,9 @@ Route::resource('proveedors', 'ProveedorController');
 Route::group(['prefix' => 'usuarios'], function () {
     Route::get('/', 'UserController@index');
     Route::post('store', 'UserController@store')->name('user.store');
+    Route::get('/{user_id}', 'UserController@info');
+    Route::post('update', 'UserController@update')->name('user.update');
+    
 
 });
 
