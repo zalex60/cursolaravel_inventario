@@ -17,7 +17,7 @@ class UserRequest extends FormRequest
     {
         return [
             'nombre' => 'required|min:4',
-            'email' => 'required|unique:users,email,'.$this->id,
+            'email' => 'required|unique:users,email,'.$this->user_id,
             'perfil_id' => 'required|exists:perfiles,id',
             'area_id' => 'required|exists:areas,id',
         ];

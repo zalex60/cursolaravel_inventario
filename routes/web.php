@@ -25,7 +25,15 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'usuarios'], function () {
-    Route::get('/', 'UserController@index');
+    Route::get('/', 'UserController@index')->name('usuarios');
     Route::post('store', 'UserController@store')->name('user.store');
+    Route::post('update', 'UserController@update');
+    Route::delete('destroy/{id}', 'UserController@destroy');
+});
+
+Route::group(['prefix' => 'articulos'], function () {
+    Route::get('/', 'ArticuloController@index')->name('articulos');
+    Route::post('store', 'ArticuloController@store');
+    Route::post('update', 'ArticuloController@update');
 });
 
