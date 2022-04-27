@@ -8,3 +8,4 @@ Confirmar mi correo
 @endcomponent
 ####Si no puedes ver el botón copia el siguiente link en tu navegador: {{env('APP_URL').'/verify/'.$token}}
 @endcomponent
+
