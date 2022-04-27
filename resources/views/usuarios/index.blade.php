@@ -47,7 +47,7 @@
 								<td>{{$usuario->perfil->nombre}}</td>
 								<td>{{$usuario->area->nombre}}</td>
 								<td>
-									<button class="btn btn-primary">
+									<button class="btn btn-primary" onclick='addupd()'>
 										Editar
 									</button>
 									<button class="btn btn-danger">
@@ -75,7 +75,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			{!! Form::open(array('url'=>'usuarios/store','method'=>'POST')) !!}
+			{!! Form::open(array('url'=>'usuarios/store','method'=>'POST','id'=>'formUser')) !!}
 			{!! csrf_field() !!}
 			<div class="modal-body">
 				<div class="form-group">
@@ -130,8 +130,11 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-	function addupd(){
+	function addupd(user=0){
 
+		if(user){
+			$('#nombre').val()
+		}
 	}
 </script>
 @endsection

@@ -54,6 +54,23 @@ class UserController extends Controller
         }
     }
 
+    public function update(Request $request){
+        $user = User::find($request->id);
+        $user->name = $request->nombre;
+        $user->email = $request->email;
+        $user->perfil_id = $request->perfil_id;
+        $user->area_id = $request->area_id;
+        $user->password = Str::random(30);
+        if ($user->save()) {
+            //$job = new SendBienvenida($user->email, $user->nombre, Auth::user()->id, $user->id);
+            //dispatch($job);
+            return redirect()->back();
+        }else{
+            return redirect()->back();
+        }
+    }
+
+    
     public function verify($token){
         if (User::where('password', $token)->exists()) {
             $user=User::where('password', $token)->first();
