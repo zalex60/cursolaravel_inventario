@@ -30,6 +30,7 @@ class ArticuloController extends Controller
         $path_base = $token.'/'.$token.$formato = '.'.explode('/',$request->file('imagen')->getMimeType())[1];
         try{
             $contents = \File::get($request->file('imagen'));
+
             if(!Storage::disk('public')->exists($path_base)){
                 Storage::disk('public')->put($path_base,$contents);
                 if(!Storage::disk('public')->exists($path_base)){
@@ -41,7 +42,6 @@ class ArticuloController extends Controller
                 return redirect()->back();
             }
         }catch(\Exception $e){
-            dd($e);
             \Session::flash('message_danger', '¡Error. No se Guardó la anexo!');
             return redirect()->back();
         }

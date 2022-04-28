@@ -83,7 +83,7 @@
 			confirmButtonText: 'Yes, delete it!'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				axios.delete(`usuarios/destroy/${id}`).then(response =>{
+				axios.delete(`destroy/${id}`).then(response =>{
 					if(response.data.status){
 						Swal.fire(
 							'¡Eliminadó!',
