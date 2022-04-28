@@ -35,5 +35,6 @@ Route::group(['prefix' => 'articulos'], function () {
     Route::get('/', 'ArticuloController@index')->name('articulos');
     Route::post('store', 'ArticuloController@store');
     Route::post('update', 'ArticuloController@update');
+    Route::delete('destroy/{id}', 'ArticuloController@destroy');
 });
 
