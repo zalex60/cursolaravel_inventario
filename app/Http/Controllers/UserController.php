@@ -54,22 +54,32 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request){
-        $user = User::find($request->id);
+    public function update(UserRequest $request){
+        $user = User::find($request->user_id);
         $user->name = $request->nombre;
         $user->email = $request->email;
         $user->perfil_id = $request->perfil_id;
         $user->area_id = $request->area_id;
-        $user->password = Str::random(30);
         if ($user->save()) {
-            //$job = new SendBienvenida($user->email, $user->nombre, Auth::user()->id, $user->id);
-            //dispatch($job);
             return redirect()->back();
         }else{
             return redirect()->back();
         }
     }
 
+    public function destroy($id){
+        if (User::where('id',$id)->exists() && \Auth::user()->id!=$id) {
+            $user=User::find($id);
+            if ($user->delete()) {
+                return ['status'=>1,'message'=>'Se eliminó correctamente'];
+            }else{
+                return ['status'=>0,'message'=>'No se elimino el usuario'];
+            }
+        }else{
+            return ['status'=>0,'message'=>'No se elimino el usuario'];
+        }
+        
+    }
     
     public function verify($token){
         if (User::where('password', $token)->exists()) {
