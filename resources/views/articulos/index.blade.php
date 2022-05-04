@@ -43,7 +43,13 @@
 								<td>{{$articulo->serie}}</td>
 								<td>{{$articulo->estatus}}</td>
 								<td>{{$articulo->costo}}</td>
-								<td>{{$articulo->imagen}}</td>
+								<td>
+									@if($articulo->imagen)
+									{{$articulo->imagen}}
+									@else
+									no tiene imagen 
+									@endif
+								</td>
 								<td>
 									<a class="btn btn-primary" onclick='addupd({{$articulo}})'>
 										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>

@@ -61,6 +61,7 @@ class ArticuloController extends Controller
             $imagen->token = $token;
             $imagen->type = $request->file('imagen')->getMimeType();
             $imagen->articulo_id = $articulo->id;
+            $imagen->save();
             return redirect()->back();
         }else{
             return redirect()->back();
