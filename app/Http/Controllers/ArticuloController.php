@@ -15,6 +15,14 @@ class ArticuloController extends Controller
 
     public function index(){
         $articulos = Articulo::all();
+        $articulos->map(function($articulo){
+            if ($articulo->imagen) {
+                $formato = '.'.explode('/',$articulo->imagen->type)[1];
+                $path_base = $articulo->folio.'/'.$articulo->folio.'.'.$formato;
+                $articulo['imgUrl']=Storage::disk('public')->url($path_base);
+            }
+        });
+
         $marcas=Marca::orderBy('id','asc')
         ->select(\DB::raw("CONCAT(id,'. ',nombre) AS dato"), 'id')
         ->pluck('dato', 'id');
@@ -93,13 +101,23 @@ class ArticuloController extends Controller
     public function destroy($id){
         if (Articulo::where('id',$id)->exists()) {
             $articulo=Articulo::find($id);
-            if ($articulo->delete()) {
-                return ['status'=>1,'message'=>'Se eliminó correctamente'];
-            }else{
-                return ['status'=>0,'message'=>'No se elimino el usuario'];
-            }
+            $imagen = Imagen::where('articulo_id',$id)->first();
+            dd('okfd');
+            $path_base = $imagen->token;
+            try{
+             Storage::disk('public')->deleteDirectory($path_base);
+         }catch(\Exception $e){
+            \Log::info($e);
+        }
+        dd('ok');
+        $imagen->delete();
+        if ($articulo->delete()) {
+            return ['status'=>1,'message'=>'Se eliminó correctamente'];
         }else{
             return ['status'=>0,'message'=>'No se elimino el usuario'];
         }
+    }else{
+        return ['status'=>0,'message'=>'No se elimino el usuario'];
     }
+}
 }

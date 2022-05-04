@@ -16,4 +16,8 @@ class Articulo extends Model
     public function area(){
         return $this->belongsTo('App\Models\Area','area_id'); 
     }
+
+    public function imagen(){
+        return $this->hasOne('App\Models\Imagen','articulo_id');
+    }
 }
